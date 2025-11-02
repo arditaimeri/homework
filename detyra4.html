@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bind Function Example</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+<h1>Bind Function Example</h1>
+
+<script>
+
+function bind(fn, context) {
+
+  var boundArgs = Array.prototype.slice.call(arguments, 2);
+
+  return function() {
+    var callArgs = Array.prototype.slice.call(arguments);
+    
+   var  allArgs = boundArgs.concat(callArgs);
+   
+    return fn.apply(context, allArgs);
+  };
+}
+
+var user = { firstName: "Bill" };
+
+
+function add(a, b, c) {
+  return this.firstName + " adds " + (a + b + c);
+}
+
+
+alert(bind(add, user)(1, 2, 3));          // Bill adds 6
+alert(bind(add, user, 1)(2, 3));          // Bill adds 6
+alert(bind(add, user, 1, 2, 3)());        // Bill adds 6
+alert(bind(add, user, 1, 2, 3)(4, 5, 6)); // Bill adds 6
+</script>
+
+</body>
+</html>
+

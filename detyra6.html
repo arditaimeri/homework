@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Format Phone Numbers</title>
+</head>
+<body>
+<h1>Formatted Phone Numbers</h1>
+
+<script>
+let st = `063-111-1234
+(333) 456-8768
+4446575547`;
+
+
+let formatted = st.split("\n").map(number => {
+  
+  let digits = number.replace(/\D/g, "");
+  let part1 = digits.slice(0, 3);
+  let part2 = digits.slice(3, 6);
+  let part3 = digits.slice(6, 10);
+  return `(${part1}) ${part2} ${part3}`;
+});
+
+console.log(formatted.join("\n"));
+</script>
+
+</body>
+</html>

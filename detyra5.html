@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Secure Users Example</title>
+</head>
+<body>
+<h1>Secure Users Example</h1>
+
+<div id="output"></div>
+
+<script>
+function getUsers() {
+  const users = ["Bill"];
+  return {
+    addUser: function(name) {
+      users.push(name);
+      return users.slice();
+    },
+    getUsers: function() {
+      return users.slice();
+    }
+  };
+}
+
+const u = getUsers();
+
+
+u.addUser("Jim");
+u.addUser("Paul");
+
+document.getElementById("output").innerHTML += "<p>Users: " + u.getUsers().join(", ") + "</p>";
+var copy = u.getUsers();
+copy.pop();
+document.getElementById("output").innerHTML += "<p>After pop on copy: " + u.getUsers().join(", ") + "</p>";
+</script>
+
+</body>
+</html>

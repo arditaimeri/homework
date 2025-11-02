@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Work 3</title>
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <h2>Work 3</h2>
+
+    <script>
+      const arr = [11, 66, 33, 44, 22, 55, 2];
+function filter(arr, fn) {
+        const result = [];
+        for (let i = 0; i < arr.length; i++) {
+          if (fn(arr[i])) {
+            result.push(arr[i]);
+          }
+        }
+        return result;
+      }
+
+      const filteredArr = filter(arr, function (item) {
+        return item > 50;
+      });
+
+      console.log(filteredArr); 
+      alert(filteredArr); 
+    </script>
+  </body>
+</html>
+
