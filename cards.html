@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 6 — Object Destructuring: Random Employee Card</title>
+</head>
+<body>
+  <h2>👤 Task 6 — Object Destructuring: Random Employee Card</h2>
+  <p>Click the button to show a random employee profile.</p>
+
+  <button id="showEmployeeBtn">Show Employee</button>
+  <div id="card" style="border:1px solid #ddd; padding:10px; width:250px; margin-top:10px;"></div>
+
+  <script>
+    const employees = [
+      { name: "Ardita", role: "Frontend Developer", department: "Engineering" },
+      { name: "Dea", role: "Designer", department: "UI/UX" },
+      { name: "Noa", role: "Backend Developer", department: "IT" },
+      { name: "Rei", role: "Project Manager", department: "Operations" },
+    ];
+
+    document.getElementById("showEmployeeBtn").addEventListener("click", () => {
+ 
+      const randomIndex = Math.floor(Math.random() * employees.length);
+      const randomEmployee = employees[randomIndex];
+
+      
+      const { name, role, department } = randomEmployee;
+
+      
+      document.getElementById("card").innerHTML = `
+        <strong>Name:</strong> ${name} <br>
+        <strong>Role:</strong> ${role} <br>
+        <strong>Department:</strong> ${department}
+      `;
+    });
+  </script>
+</body>
+</html>

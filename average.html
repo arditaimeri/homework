@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Merge Multiple Arrays of Scores</title>
+</head>
+<body>
+  <h2> Merge Multiple Arrays of Scores</h2>
+  <p>Enter several groups of scores and show all combined + average score.</p>
+
+  <textarea id="group1" placeholder="Group 1: e.g. 10, 20, 30"></textarea><br><br>
+  <textarea id="group2" placeholder="Group 2: e.g. 25, 15, 40"></textarea><br><br>
+  <textarea id="group3" placeholder="Group 3 (optional): e.g. 5, 10, 20"></textarea><br><br>
+  
+  <button id="combineBtn">Combine & Calculate</button>
+  <p id="output"></p>
+
+  <script>
+    
+    document.getElementById("combineBtn").addEventListener("click", () => {
+      const group1 = document.getElementById("group1").value;
+      const group2 = document.getElementById("group2").value;
+      const group3 = document.getElementById("group3").value;
+
+      function parseGroup(text) {
+        return text
+          .split(",")            
+          .map(n => n.trim())    
+          .filter(n => n !== "")  
+          .map(Number);        }   
+
+     
+      const allScores = [
+        ...parseGroup(group1),
+        ...parseGroup(group2),
+        ...parseGroup(group3)
+      ];
+
+      
+      if (allScores.length === 0) {
+        document.getElementById("output").textContent = "⚠️ Please enter at least one group of scores!";
+        return;
+      }
+
+ 
+      const sum = allScores.reduce((a, b) => a + b, 0);
+      const avg = sum / allScores.length;
+
+  
+      document.getElementById("output").innerHTML = `
+        Combined Scores: [${allScores.join(", ")}] <br>
+        Average: ${avg.toFixed(2)}
+      `;
+    });
+  </script>
+</body>
+</html>

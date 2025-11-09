@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 1 — Flexible Sum Calculator</title>
+</head>
+<body>
+  <h2>  Task 1 — Flexible Sum Calculator</h2>
+  <p>Enter numbers separated by commas and click "Calculate".</p>
+  
+  <input type="text" id="numbersInput" placeholder="e.g. 2, 5, 10, 3">
+  <button id="calcBtn">Calculate</button>
+  <p id="result"></p>
+
+  <script>
+   
+    function sumAll(...numbers) {
+      return numbers.reduce((total, num) => total + num, 0);
+    }
+
+    
+    const input = document.getElementById('numbersInput');
+    const button = document.getElementById('calcBtn');
+    const result = document.getElementById('result');
+
+    button.addEventListener('click', () => {
+      const value = input.value.trim();
+
+      if (value === "") {
+        result.textContent = "⚠️ Ju lutem shkruani disa numra.";
+        return;
+      }
+
+      
+      const nums = value.split(',')
+                        .map(n => parseFloat(n))
+                        .filter(n => !isNaN(n));
+
+      if (nums.length === 0) {
+        result.textContent = "Nuk ka numra te vlefshem!";
+        return;
+      }
+
+      const total = sumAll(...nums);
+      result.textContent =  `The total is ${total}`;
+    });
+  </script>
+</body>
+</html>
