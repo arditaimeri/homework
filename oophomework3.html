@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Homework 3 - Notifications Live</title>
+</head>
+<body>
+
+<h2>Homework 3 — Notifications</h2>
+<div id="output3" class="output"></div>
+
+<script>
+class Notification {
+  send(message) { return 'Sending notification: ' + message; }
+}
+class EmailNotification extends Notification {
+  send(message) { return 'Sending EMAIL: ' + message; }
+}
+class SMSNotification extends Notification {
+  send(message) { return 'Sending SMS: ' + message; }
+}
+class PushNotification extends Notification {
+  send(message) { return 'Sending PUSH: ' + message; }
+}
+
+
+const email = new EmailNotification();
+const sms = new SMSNotification();
+const push = new PushNotification();
+
+const output = [];
+output.push(email.send('Hello!'));
+output.push(sms.send('Hi there!'));
+output.push(push.send('You have a new message!'));
+
+document.getElementById('output3').innerText = output.join('\n');
+</script>
+
+</body>
+</html>

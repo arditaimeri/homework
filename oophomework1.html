@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+  <meta charset="UTF-8">
+  <title>BankAccount Test</title>
+</head>
+<body>
+<script>
+class BankAccount {
+  #balance;
+
+  constructor(initialBalance = 0) {
+    this.#balance = initialBalance;
+  }
+
+  deposit(amount) {
+    this.#balance += amount;
+  }
+
+  withdraw(amount) {
+    if (amount <= this.#balance) {
+      this.#balance -= amount;
+    }
+  }
+
+  getBalance() {
+    return this.#balance;
+  }
+}
+
+// Test example
+const acc = new BankAccount(100);
+acc.deposit(50);
+acc.withdraw(20);
+
+console.log("Balance:", acc.getBalance());
+</script>
+
+</body>
+</html>
+

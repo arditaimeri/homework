@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Homework 2-Car Live</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  pre { background: #f5f5f5; padding: 10px; border-radius: 8px; overflow-x: auto; }
+  .output { background: #e8f4ff; padding: 10px; border-radius: 8px; margin-top: 5px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+
+<div id="output2" class="output"></div>
+
+<script>
+class Car {
+  #fuel;
+  #engineOn;
+  
+  constructor(fuel=50) {
+    this.#fuel = fuel;
+    this.#engineOn = false;
+  }
+
+  start() {
+    if(this.#fuel > 0) {
+      this.#engineOn = true;
+      return 'Engine started.';
+    } else {
+      return 'No fuel!';
+    }
+  }
+
+  stop() {
+    this.#engineOn = false;
+    return 'Engine stopped.';
+  }
+
+  drive() {
+    if(!this.#engineOn) return 'Start the engine first!';
+    if(this.#fuel <= 0) { this.stop(); return 'Out of fuel!'; }
+    this.#fuel -= 10;
+    return 'Driving... Fuel left: ' + this.#fuel;
+  }
+}
+
+const car = new Car(50);
+let carOutput = [];
+carOutput.push(car.start());
+carOutput.push(car.drive());
+carOutput.push(car.drive());
+carOutput.push(car.stop());
+
+document.getElementById('output2').innerText = carOutput.join('\n');
+</script>
+
+</body>
+</html>
+
