@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank Account</title>
+</head>
+<body>
+  <h1>BankAccount</h1>
+
+  <p>Balance: $<span id="balance">0</span></p>
+
+  <input type="number" id="amount" placeholder="Amount">
+  <button id="depositBtn">Deposit</button>
+  <button id="withdrawBtn">Withdraw</button>
+
+  <script>
+    class BankAccount {
+      #balance;
+      constructor(initialBalance = 0) { this.#balance = initialBalance; }
+      deposit(amount) { if (amount > 0) this.#balance += amount; }
+      withdraw(amount) { if (amount > 0 && amount <= this.#balance) this.#balance -= amount; }
+      getBalance() { return this.#balance; }
+    }
+
+    const account = new BankAccount(100);
+    const balanceEl = document.getElementById("balance");
+    const amountEl = document.getElementById("amount");
+    const depositBtn = document.getElementById("depositBtn");
+    const withdrawBtn = document.getElementById("withdrawBtn");
+
+    function updateBalance() { balanceEl.textContent = account.getBalance(); }
+
+    depositBtn.addEventListener("click", () => {
+      const amount = Number(amountEl.value);
+      account.deposit(amount);
+      updateBalance();
+      amountEl.value = "";
+    });
+
+    withdrawBtn.addEventListener("click", () => {
+      const amount = Number(amountEl.value);
+      account.withdraw(amount);
+      updateBalance();
+      amountEl.value = "";
+    });
+
+    updateBalance();
+  </script>
+</body>
+</html>

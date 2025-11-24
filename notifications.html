@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notifications</title>
+</head>
+<body>
+  <h1>Notifications System</h1>
+
+  <input type="text" id="message" placeholder="Enter message">
+  <select id="type">
+    <option value="email">Email</option>
+    <option value="sms">SMS</option>
+    <option value="push">Push</option>
+  </select>
+  <button id="sendBtn">Send</button>
+
+  <ul id="output"></ul>
+
+  <script>
+    class Notification {
+      constructor(message) { this.message = message; }
+      send() { return "Sending notification: " + this.message; }
+    }
+
+    class EmailNotification extends Notification {
+      send() { return `Sending Email: ${this.message}`; }
+    }
+
+    class SMSNotification extends Notification {
+      send() { return `Sending SMS: ${this.message}`; }
+    }
+
+    class PushNotification extends Notification {
+      send() { return `Sending Push: ${this.message}`; }
+    }
+
+    const messageEl = document.getElementById("message");
+    const typeEl = document.getElementById("type");
+    const sendBtn = document.getElementById("sendBtn");
+    const outputEl = document.getElementById("output");
+
+    sendBtn.addEventListener("click", () => {
+      const msg = messageEl.value.trim();
+      if(!msg) return;
+      let notification;
+      if(typeEl.value === "email") notification = new EmailNotification(msg);
+      else if(typeEl.value === "sms") notification = new SMSNotification(msg);
+      else if(typeEl.value === "push") notification = new PushNotification(msg);
+
+      const li = document.createElement("li");
+      li.textContent = notification.send();
+      outputEl.appendChild(li);
+      messageEl.value = "";
+    });
+  </script>
+</body>
+</html>

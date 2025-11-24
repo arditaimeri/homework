@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Car-Control-System</title>
+</head>
+<body>
+  <h1>Car Control System</h1>
+
+  <p>Fuel: <span id="fuel">0</span></p>
+  <p>Engine status: <span id="engine">Off</span></p>
+
+  <button id="startBtn">Start Engine</button>
+  <button id="stopBtn">Stop Engine</button>
+  <input type="number" id="distance" placeholder="Distance (km)">
+  <button id="driveBtn">Drive</button>
+
+  <script>
+    class Car {
+      #fuel;
+      #engineOn;
+      constructor(initialFuel = 100) { this.#fuel = initialFuel; this.#engineOn = false; }
+      start() { if(this.#fuel>0&&!this.#engineOn){this.#engineOn=true; alert("Engine started.");} else if(this.#engineOn){alert("Engine is already on.");} else{alert("Cannot start engine. No fuel!");} }
+      stop() { if(this.#engineOn){this.#engineOn=false; alert("Engine stopped.");} else{alert("Engine is already off.");} }
+      drive(distance) {
+        if(!this.#engineOn){alert("Cannot drive. Engine is off!"); return;}
+        const fuelNeeded = distance*0.5;
+        if(this.#fuel>=fuelNeeded){this.#fuel-=fuelNeeded; alert(`Drove ${distance} km. Fuel left: ${this.#fuel.toFixed(2)}`);} 
+        else {alert("Not enough fuel to drive that distance!");}
+      }
+      getFuel() { return this.#fuel; }
+      isEngineOn() { return this.#engineOn; }
+    }
+
+    const myCar = new Car(20);
+    const fuelEl = document.getElementById("fuel");
+    const engineEl = document.getElementById("engine");
+    const distanceEl = document.getElementById("distance");
+    const startBtn = document.getElementById("startBtn");
+    const stopBtn = document.getElementById("stopBtn");
+    const driveBtn = document.getElementById("driveBtn");
+
+    function updateStatus() {
+      fuelEl.textContent = myCar.getFuel().toFixed(2);
+      engineEl.textContent = myCar.isEngineOn() ? "On" : "Off";
+    }
+
+    startBtn.addEventListener("click", () => { myCar.start(); updateStatus(); });
+    stopBtn.addEventListener("click", () => { myCar.stop(); updateStatus(); });
+    driveBtn.addEventListener("click", () => {
+      const distance = Number(distanceEl.value);
+      if(distance>0){ myCar.drive(distance); updateStatus(); distanceEl.value=""; }
+    });
+
+    updateStatus();
+  </script>
+</body>
+</html>

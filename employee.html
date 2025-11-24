@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Employee & Manager</title>
+</head>
+<body>
+  <h1>Employee & Manager</h1>
+
+  <h2>Add Employee</h2>
+  <input type="text" id="empName" placeholder="Name">
+  <input type="number" id="empSalary" placeholder="Salary">
+  <button id="addEmpBtn">Add Employee</button>
+
+  <h2>Add Manager</h2>
+  <input type="text" id="mgrName" placeholder="Name">
+  <input type="number" id="mgrSalary" placeholder="Salary">
+  <input type="text" id="mgrDept" placeholder="Department">
+  <button id="addMgrBtn">Add Manager</button>
+
+  <h2>Info</h2>
+  <ul id="output"></ul>
+
+  <script>
+    class Employee {
+      constructor(name, salary) {
+        this.name = name;
+        this.salary = salary;
+      }
+      info() {
+        return `Employee: ${this.name}, Salary: $${this.salary}`;
+      }
+    }
+
+    class Manager extends Employee {
+      constructor(name, salary, department) {
+        super(name, salary);
+        this.department = department;
+      }
+      info() {
+        return `${super.info()}, Department: ${this.department}`;
+      }
+    }
+
+    const outputEl = document.getElementById("output");
+
+    document.getElementById("addEmpBtn").addEventListener("click", () => {
+      const name = document.getElementById("empName").value.trim();
+      const salary = Number(document.getElementById("empSalary").value);
+      if(name && salary){
+        const emp = new Employee(name, salary);
+        const li = document.createElement("li");
+        li.textContent = emp.info();
+        outputEl.appendChild(li);
+        document.getElementById("empName").value = "";
+        document.getElementById("empSalary").value = "";
+      }
+    });
+
+    document.getElementById("addMgrBtn").addEventListener("click", () => {
+      const name = document.getElementById("mgrName").value.trim();
+      const salary = Number(document.getElementById("mgrSalary").value);
+      const dept = document.getElementById("mgrDept").value.trim();
+      if(name && salary && dept){
+        const mgr = new Manager(name, salary, dept);
+        const li = document.createElement("li");
+        li.textContent = mgr.info();
+        outputEl.appendChild(li);
+        document.getElementById("mgrName").value = "";
+        document.getElementById("mgrSalary").value = "";
+        document.getElementById("mgrDept").value = "";
+      }
+    });
+  </script>
+</body>
+</html>

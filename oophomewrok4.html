@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Homework 4</title>
+
+</head>
+<body>
+
+<h2>Employee-Manager</h2>
+<pre>// Inheritance me super()</pre>
+<div id="output4" class="output"></div>
+
+<script>
+class Employee {
+  constructor(name, salary) {
+    this.name = name;
+    this.salary = salary;
+  }
+  info() {
+    return 'Name: ' + this.name + ', Salary: ' + this.salary;
+  }
+}
+
+class Manager extends Employee {
+  constructor(name, salary, department) {
+    super(name, salary);
+    this.department = department;
+  }
+  info() {
+    return super.info() + ', Department: ' + this.department;
+  }
+}
+
+const emp = new Employee('Ardita', 900);
+const man = new Manager('Nora', 1500, 'IT');
+
+document.getElementById('output4').innerText = emp.info() + '\n' + man.info();
+</script>
+
+</body>
+</html>
