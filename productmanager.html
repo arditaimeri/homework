@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Manager</title>
+<style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { margin-right: 5px; }
+    button { margin-left: 5px; }
+    .in-stock { color: green; }
+    .out-stock { color: red; }
+</style>
+</head>
+<body>
+
+<h1>Product Manager</h1>
+
+<!-- Forma e produktit -->
+<div>
+    <input type="text" id="productName" placeholder="Emri i produktit">
+    <input type="number" id="productPrice" placeholder="Cmimi">
+    <button id="addProduct">Shto Produkt</button>
+</div>
+<p id="error" style="color:red"></p>
+
+<h3>Lista e produkteve</h3>
+<ul id="productList"></ul>
+
+<script>
+// Array për produktet
+let products = [];
+
+// Elements
+const nameInput = document.getElementById("productName");
+const priceInput = document.getElementById("productPrice");
+const addBtn = document.getElementById("addProduct");
+const errorP = document.getElementById("error");
+const productList = document.getElementById("productList");
+
+// Funksioni për shtimin e produktit
+function addProduct() {
+    const name = nameInput.value.trim();
+    const price = priceInput.value.trim();
+
+    if (name === "" || price === "") {
+        errorP.textContent = "Emri dhe cmimi nuk mund të jenë bosh";
+        return;
+    }
+
+    const newProduct = {
+        id: Date.now(),
+        name: name,
+        price: parseFloat(price),
+        inStock: true
+    };
+
+    products.push(newProduct);
+    nameInput.value = "";
+    priceInput.value = "";
+    errorP.textContent = "";
+
+    renderProducts();
+}
+
+// Funksioni për fshirjen e produktit
+function deleteProduct(id) {
+    products = products.filter(p => p.id !== id);
+    renderProducts();
+}
+
+// Funksioni për ndryshimin e stokut
+function toggleStock(id) {
+    products = products.map(p => p.id === id ? {...p, inStock: !p.inStock} : p);
+    renderProducts();
+}
+
+// Funksioni për të shfaqur produktet
+function renderProducts() {
+    productList.innerHTML = "";
+    products.forEach(p => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+            <strong>${p.name}</strong> - ${p.price} € - 
+            <span class="${p.inStock ? 'in-stock' : 'out-stock'}">${p.inStock ? "Ne stok" : "Nuk ka stok"}</span>
+            <button onclick="toggleStock(${p.id})">Ndrysho stok</button>
+            <button onclick="deleteProduct(${p.id})">Fshij</button>
+        `;
+        productList.appendChild(li);
+    });
+}
+
+// Event listener për butonin
+addBtn.addEventListener("click", addProduct);
+</script>
+
+</body>
+</html>

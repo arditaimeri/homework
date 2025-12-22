@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Task Tracker JS</title>
+</head>
+<body>
+
+<h1>TaskTracker-JS</h1>
+
+<script>
+class TaskManager {
+    constructor() {
+        this.tasks = [];
+        this.nextId = 1;
+    }
+
+    addTask(title, description, priority) {
+        const newTask = {
+            id: this.nextId++,
+            title,
+            description,
+            priority,
+            completed: false
+        };
+        this.tasks.push(newTask);
+        console.log(`Task "${title}" u shtua.`);
+    }
+
+    deleteTask(id) {
+        this.tasks = this.tasks.filter(task => task.id !== id);
+        console.log(`Task me ID ${id} u fshi.`);
+    }
+
+    toggleCompleted(id) {
+        const task = this.tasks.find(task => task.id === id);
+        if (task) {
+            task.completed = !task.completed;
+            console.log(`Task "${task.title}" statusi u ndryshua: ${task.completed ? "Perfunduar" : "Jo perfunduar"}`);
+        }
+    }
+
+    printTasks() {
+        console.log("Lista e detyrave:");
+        this.tasks.forEach(task => {
+            console.log(`ID: ${task.id}, Title: ${task.title}, Description: ${task.description}, Priority: ${task.priority}, Completed: ${task.completed}`);
+        });
+    }
+}
+
+const manager = new TaskManager();
+
+manager.addTask("Mëso TypeScript", "Lexo dokumentacionin dhe bëj ushtrime", "High");
+manager.addTask("Shkruaj kodin për projektin", "Bëj detyrat praktike", "Medium");
+manager.addTask("Pushim", "Relakso pak pas kodimit", "Low");
+
+manager.printTasks();
+manager.toggleCompleted(1);
+manager.deleteTask(3);
+manager.printTasks();
+</script>
+
+</body>
+</html>

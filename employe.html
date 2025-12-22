@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Applicants Manager</title>
+
+    <!-- React + ReactDOM CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Babel për të përdorur JSX direkt në browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; }
+        input, select, button {
+            width: 100%; padding: 10px; margin: 10px 0;
+            border: 1px solid #ccc; border-radius: 5px;
+        }
+        .applicant {
+            background: #fafafa; padding: 15px; margin-top: 10px;
+            border-radius: 8px; border-left: 5px solid #007bff;
+        }
+        button.delete {
+            background: red; color: white; border: none; padding: 8px 12px; border-radius: 5px;
+            cursor: pointer; margin-top: 10px;
+        }
+        .error { color: red; font-size: 14px; }
+    </style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+
+function App() {
+    const [form, setForm] = React.useState({
+        fullName: "",
+        age: "",
+        profession: "",
+        experience: "",
+        status: "Full-time"
+    });
+
+    const [error, setError] = React.useState("");
+    const [applicants, setApplicants] = React.useState([]);
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        // Validimi
+        if (!form.fullName || !form.age || !form.profession || !form.experience) {
+            setError("Të gjitha fushat janë të detyrueshme!");
+            return;
+        }
+
+        setError("");
+
+        setApplicants([...applicants, form]);
+
+        // reset form
+        setForm({
+            fullName: "",
+            age: "",
+            profession: "",
+            experience: "",
+            status: "Full-time"
+        });
+    };
+
+    const deleteApplicant = (index) => {
+        const filtered = applicants.filter((_, i) => i !== index);
+        setApplicants(filtered);
+    };
+
+    return (
+        <div className="container">
+            <h2>Job Applicants Manager</h2>
+
+            <form onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    name="fullName"
+                    placeholder="Full Name"
+                    value={form.fullName}
+                    onChange={handleChange}
+                />
+
+                <input
+                    type="number"
+                    name="age"
+                    placeholder="Age"
+                    value={form.age}
+                    onChange={handleChange}
+                />
+
+                <input
+                    type="text"
+                    name="profession"
+                    placeholder="Profession"
+                    value={form.profession}
+                    onChange={handleChange}
+                />
+
+                <input
+                    type="number"
+                    name="experience"
+                    placeholder="Years of experience"
+                    value={form.experience}
+                    onChange={handleChange}
+                />
+
+                <select name="status" value={form.status} onChange={handleChange}>
+                    <option>Full-time</option>
+                    <option>Part-time</option>
+                    <option>Unemployed</option>
+                </select>
+
+                {error && <p className="error">{error}</p>}
+
+                <button type="submit">Shto Aplikuesin</button>
+            </form>
+
+            <h3>Lista e Aplikuesve</h3>
+
+            {applicants.map((app, index) => (
+                <div className="applicant" key={index}>
+                    <p><strong>Emri:</strong> {app.fullName}</p>
+                    <p><strong>Mosha:</strong> {app.age}</p>
+                    <p><strong>Profesioni:</strong> {app.profession}</p>
+                    <p><strong>Eksperienca:</strong> {app.experience} vite</p>
+                    <p><strong>Statusi:</strong> {app.status}</p>
+
+                    <button className="delete" onClick={() => deleteApplicant(index)}>Delete</button>
+                </div>
+            ))}
+        </div>
+    );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+
+</script>
+</body>
+</html>
